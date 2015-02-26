@@ -1,0 +1,17 @@
+csc 18b group project
+software netbeans
+grphic - google png & ico or draw 
+	 (ship, hit, miss) overlap
+	 put it into prog
+	 interface
+style  - place ship (space to change vertical horizontal)
+	 only keyborad input enter to place space to flip
+	arrow key to move
+	ice block random
+	easy only ai has block
+	hard random block 
+	setting to change 
+	 choose size? fixed
+logic  - how to place ship
+	 fire checking 
+sound  - google
