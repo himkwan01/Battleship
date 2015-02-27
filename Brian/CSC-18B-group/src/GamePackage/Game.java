@@ -147,34 +147,28 @@ public class Game extends Table{
   //Player place ship function
   public void Place(Game o){
     print(o);
-    for(int q=0;q<5;q++){
-      do{
-        do{
-          do{
-            valid=true;
-            System.out.print("Choose the coordinates to place the ");
-            System.out.print(unit[q]+"-unit ship with A1A5 form : ");
-            place = cin.next();
-            try{
-              placeCheck();
-            }
-            catch(){ //place ship exception
-              valid=false;
-              System.out.print(temp);
-            }
-          }
-        }
-      }
-    }
+//    for(int q=0;q<5;q++){
+//      do{
+//        do{
+//          do{
+//            valid=true;
+//            System.out.print("Choose the coordinates to place the ");
+//            System.out.print(unit[q]+"-unit ship with A1A5 form : ");
+//            place = cin.next();
+//            try{
+//              placeCheck();
+//            }
+//            catch(){ //place ship exception
+//              valid=false;
+//              System.out.print(temp);
+//            }
+//          }
+//        }
+//      }
+//    }
   }//place ship function ends
   //placing validation
-  private void placeCheck() extends Exception{
-    String temp;
-    if(place.length()!=4){
-      temp="ERROR: STRING SIZE\n";
-      
-    }
-  }
+  
   //start fucntion to call the other default functions 
   public void start(Game o){
     
