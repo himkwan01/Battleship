@@ -2,6 +2,7 @@ package GamePackage;
 
 import csc.pkg18b.group.Table;
 import java.util.Random;
+import java.util.Scanner;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,6 +17,7 @@ import java.util.Random;
 //  !!!!default access modifier only same package
 public class Game extends Table{
   //Declare variables
+  Scanner cin = new Scanner(System.in);
   Random rand = new Random();
   //start and end coordinates for placing the ship
   int x1, x2, y1, y2;
@@ -31,14 +33,14 @@ public class Game extends Table{
   String place; //easy to check the validation format A1A5
   
   //Game Constructor
-  public Game(int num){
+  public Game(int num){ //for player
     super(num);
     //inititalize
     hit=0;
     miss=0;
     win=false;
   }
-  public Game(int num, char c){
+  public Game(int num, char c){ //for ai
     super(num);
     int count, pos;
 //    boolean valid;
@@ -82,13 +84,11 @@ public class Game extends Table{
       }
     }while(valid==false);
   }
-//  hit=0;
-//  miss=0;
-
+  hit=0;
+  miss=0;
   }
-  //Default functions
   
-  //Public Functions
+  //Print Table function para AI Table object
   public void print(Table o){
     System.out.println("Print Function");
     System.out.println(num);
@@ -142,5 +142,41 @@ public class Game extends Table{
         }
         System.out.println();
     }
+  }//print function ends
+  
+  //Player place ship function
+  public void Place(Game o){
+    print(o);
+    for(int q=0;q<5;q++){
+      do{
+        do{
+          do{
+            valid=true;
+            System.out.print("Choose the coordinates to place the ");
+            System.out.print(unit[q]+"-unit ship with A1A5 form : ");
+            place = cin.next();
+            try{
+              placeCheck();
+            }
+            catch(){ //place ship exception
+              valid=false;
+              System.out.print(temp);
+            }
+          }
+        }
+      }
+    }
+  }//place ship function ends
+  //placing validation
+  private void placeCheck() extends Exception{
+    String temp;
+    if(place.length()!=4){
+      temp="ERROR: STRING SIZE\n";
+      
+    }
   }
+  //start fucntion to call the other default functions 
+  public void start(Game o){
+    
+  }//start function ends
 }

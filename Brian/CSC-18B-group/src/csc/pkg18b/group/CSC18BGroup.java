@@ -7,7 +7,9 @@ package csc.pkg18b.group;
 
 import GamePackage.Game;
 import java.util.Scanner;
-
+/*2/26/15 finish table class 
+  game class player and ai constructor ad print function
+*/
 /**
  *
  * @author Himkw_000
