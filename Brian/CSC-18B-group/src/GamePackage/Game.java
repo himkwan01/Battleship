@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 /**
  *  all variable are default coz i use a function to run the game
- * 
+ *  Problems: exception
  */
 //  !!!!default access modifier only same package
 public class Game extends Table{
@@ -168,9 +168,27 @@ public class Game extends Table{
 //    }
   }//place ship function ends
   //placing validation
+  //missing validation function
+  
   
   //start fucntion to call the other default functions 
   public void start(Game o){
     
   }//start function ends
+  //player fire function
+  void fire(Game o){
+    
+  }//start function ends
+  //AI fire function
+  void fire(Game o, int a){
+    
+  }//ai fire function ends
+  //check player table (test game over)
+  void check(){
+    
+  }//check player table function ends
+  //check ai table(test game over)
+  void check(Game o){
+    
+  }//check ai table fucntion ends
 }
