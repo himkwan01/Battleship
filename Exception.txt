@@ -1,0 +1,23 @@
+Sorry, I'm still new at using github. This is how you would translate the exception.  
+
+//to call the exception
+	try {
+		placeCheck();
+	} catch (IllegalArgumentException e) {  //place ship exception
+		e.getMessage();
+        }
+
+
+//checks if it catches exception
+  public void checkPlace() {
+	//I don't know if place is an array or an ArrayList but that 
+	//would change the first if statement.
+        if(place.size() != 4) {
+            throw new IllegalArgumentException("ERROR: String size");
+        } else if(place[0]<'A' || place[0]>'J' || 
+          place[2]<'A' || place[2]>'J' ||
+          isdigit(place[1]==0 || isdigit(place[3])==0)) {
+            throw new IllegalArgumentException("ERROR: Invalid format\n");
+        }
+        
+    }
