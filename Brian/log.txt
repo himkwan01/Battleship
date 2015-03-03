@@ -1,0 +1,10 @@
+02/26/15
+finish table class 
+game class player and ai constructor ad print function
+all variable are default coz i use a function to run the game
+Problems: exception
+
+03/03/15
+try to translate ai fire logic
+added ai logic debugger (a void print variables function)
+Problems: multiple inheritance

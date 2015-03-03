@@ -11,6 +11,7 @@ import java.util.Scanner;
  */
 
 /**
+ *  02/26/15
  *  all variable are default coz i use a function to run the game
  *  Problems: exception
  */
@@ -181,8 +182,27 @@ public class Game extends Table{
   }//start function ends
   //AI fire function
   void fire(Game o, int a){
+    //delay function missing
     
+    //reset
+    o.done=false;
+    for(int i=0;i<4;i++){
+      o.cross[i]=true;
+    }
+    
+    //fire logic start
+    do{
+      //debug helper
+      aidbg(o);
+      
+    }while(done);
   }//ai fire function ends
+  
+  //ai logic debug helper
+  void aidbg(Game o){
+    System.out.println(o.crossdone+" "+o.finish+" "+o.goback+" "+
+                       o.oppcombo+" "+o.combo);
+  }
   //check player table (test game over)
   void check(){
     
