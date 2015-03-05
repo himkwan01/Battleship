@@ -15,3 +15,8 @@ style  - place ship (space to change vertical horizontal)
 logic  - how to place ship
 	 fire checking 
 sound  - google
+
+GUI log
+03/05/15
+simply interface built
+problems: connect two jframe classes
