@@ -8,3 +8,13 @@ Problems: exception
 try to translate ai fire logic
 added ai logic debugger (a void print variables function)
 Problems: multiple inheritance
+
+03/03/15 - 2
+no multiple inheritance in hava, use implements
+constructor in sub class keyword "super"
+
+03/04/15
+AI fire logic fixed
+player place function missing
+checking method missing
+AI class added 

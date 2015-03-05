@@ -5,6 +5,7 @@
  */
 package csc.pkg18b.group;
 
+import GamePackage.AI;
 import GamePackage.Game;
 import java.util.Scanner;
 /*2/26/15 finish table class 
@@ -42,8 +43,13 @@ public class CSC18BGroup {
 //
 //      }
       Game player = new Game(num);
-      Game ai = new Game(num, 'c');
+      AI ai = new AI(num, 'c');
       player.print(ai);
+      for(int i=0;i<num;i++){
+        player.real[i][0]='2';
+      }
+      player.print(ai);
+      player.start(ai);
 //    }while(invalid==true);
     
 //    why<test> a(num);
