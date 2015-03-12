@@ -38,7 +38,9 @@ public class test_overlayered extends javax.swing.JFrame {
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
     jLayeredPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 0)));
-    jLayeredPane2.setPreferredSize(new java.awt.Dimension(400, 300));
+    jLayeredPane2.setMaximumSize(new java.awt.Dimension(500, 400));
+    jLayeredPane2.setMinimumSize(new java.awt.Dimension(500, 400));
+    jLayeredPane2.setPreferredSize(new java.awt.Dimension(500, 400));
     jLayeredPane2.setVisible(false);
 
     jButton3.setText("go 1");
@@ -62,11 +64,14 @@ public class test_overlayered extends javax.swing.JFrame {
       .addGroup(jLayeredPane2Layout.createSequentialGroup()
         .addContainerGap()
         .addComponent(jButton3)
-        .addContainerGap(462, Short.MAX_VALUE))
+        .addContainerGap(364, Short.MAX_VALUE))
     );
     jLayeredPane2.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
     jLayeredPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+    jLayeredPane1.setMaximumSize(new java.awt.Dimension(500, 400));
+    jLayeredPane1.setMinimumSize(new java.awt.Dimension(500, 400));
+    jLayeredPane1.setPreferredSize(new java.awt.Dimension(500, 400));
 
     jButton1.setText("go 2");
     jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -97,15 +102,15 @@ public class test_overlayered extends javax.swing.JFrame {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jLayeredPane1)
+      .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 698, javax.swing.GroupLayout.PREFERRED_SIZE)
       .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jLayeredPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE))
+        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 698, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jLayeredPane1)
+      .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
       .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jLayeredPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE))
+        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
 
     pack();
