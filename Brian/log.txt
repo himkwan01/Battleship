@@ -25,3 +25,11 @@ overlayed panel example created
 03/12/15
 overlayeredPane created  "testmenu2"
 create java class to create overlayeredPane object (setResizable(false);)
+
+03-26-15
+gridtable added
+contains two java files: Sth and TwoD
+Sth is one dimension button
+TwoD is two dimension
+
+problems: see email
