@@ -1,0 +1,5 @@
+3/19/15
+Tested out splash screen using gifs. Found there was a limit to the size of the gif it will display.
+
+3/26/15
+Created two 2D button arrays (one for Player and one for AI) and placed them onto the JFrame. The code can be found within the JFrame_Battleship source.
