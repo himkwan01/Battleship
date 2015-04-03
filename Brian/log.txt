@@ -44,3 +44,9 @@ ai fire logic is missing
 ai fire logic added
 bug: some miss shows hit (random, and cross check)
 check game over method is missing
+
+04-03-15 (2)
+bug fixed
+game over method is missing
+next step: add validation, game over method
+gameplay screenshot added

@@ -255,6 +255,7 @@ public class Background {
         }while(valid==false);
         //valid random fire
         if(player[aiProp.y][aiProp.x]!=' '){ //hit
+          System.out.println("hit");
           player[aiProp.y][aiProp.x]='X';
           aiProp.hx=aiProp.x;
           aiProp.hy=aiProp.y;
@@ -267,7 +268,8 @@ public class Background {
           aiProp.oneend=false;
         }
         else{
-          player[aiProp.y][aiProp.x]='X';
+          System.out.println("miss");
+          player[aiProp.y][aiProp.x]='O';
           aiProp.done=true;
         }
       }
@@ -277,15 +279,19 @@ public class Background {
          aiProp.oppcombo==0 && aiProp.done==false){
         do{
           System.out.println("random cross");
+          System.out.println("hx="+aiProp.hx);
+          System.out.println("hy="+aiProp.hy);
           aiProp.y=aiProp.hy;
           aiProp.x=aiProp.hx;
+          System.out.println("y="+aiProp.y);
+          System.out.println("x="+aiProp.x);
           //check cross rand
           hplan=rand.nextInt(4);
           if(hplan==0) aiProp.y=aiProp.hy-1;
           if(hplan==1) aiProp.y=aiProp.hy+1;
           if(hplan==2) aiProp.x=aiProp.hx-1;
           if(hplan==3) aiProp.x=aiProp.hx+1;
-          
+          System.out.println("hplan="+hplan);
           //check over size
           if(aiProp.y<0 || aiProp.y>num-1 || aiProp.x<0 || aiProp.x>num-1){
             System.out.println("Out table");
@@ -305,7 +311,10 @@ public class Background {
             aiProp.finish=true;
             aiProp.goback=true;
           }
-        }while(aiProp.crossdone=false && aiProp.cross[hplan]==false);
+          System.out.println("cross rand gen end");
+          System.out.println("Crossdone="+aiProp.crossdone);
+          System.out.println("cross[hplan]="+aiProp.cross[hplan]);
+        }while(aiProp.crossdone==false && aiProp.cross[hplan]==false);
         
         //valid random cross
         if(aiProp.crossdone==false){
@@ -317,7 +326,7 @@ public class Background {
           aiProp.crossdone=true;
         }
         else{
-          player[aiProp.y][aiProp.x]='X';
+          player[aiProp.y][aiProp.x]='O';
           aiProp.done=true;
         }
         }

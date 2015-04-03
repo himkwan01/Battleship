@@ -538,9 +538,13 @@ public class JFrame_Battleship extends javax.swing.JFrame {
   private void AIFire(){
     bg.aiFirebg();
     buttons_Player[bg.aiProp.y][bg.aiProp.x].setText(String.valueOf(bg.player[bg.aiProp.y][bg.aiProp.x]));
-    if(bg.player[bg.aiProp.y][bg.aiProp.x]=='X')
+    if(bg.player[bg.aiProp.y][bg.aiProp.x]=='X'){
       buttons_Player[bg.aiProp.y][bg.aiProp.x].setBackground(Color.red);
-    else
+      System.out.println("hit"+bg.aiProp.y+" "+bg.aiProp.x);
+    }
+    else{
       buttons_Player[bg.aiProp.y][bg.aiProp.x].setBackground(Color.yellow);
+      System.out.println("miss"+bg.aiProp.y+" "+bg.aiProp.x);
+    }
   }
 }
