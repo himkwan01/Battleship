@@ -372,9 +372,10 @@ public class JFrame_Battleship extends javax.swing.JFrame {
          * update player table
          * ai fire turn ends
         */
-        
+        AIFire();
         //set fire button, ai buttons enable
         enableAI(true);
+        fireButton.setEnabled(true);
         //save
       }
     }
@@ -446,8 +447,28 @@ public class JFrame_Battleship extends javax.swing.JFrame {
         for (int i = 0; i < a; i++){
           for (int j = 0; j < a; j++){
             if(e.getSource()==buttons_AI[i][j]){ //gameButtons[i][j] was clicked
-            //Your code here
-            System.out.println("AI"+i+" "+j);
+              //Your code here
+              System.out.println("AI"+i+" "+j);
+              if(bg.pFireCheck(i, j)){
+                //update table (only that index) AND COLOR
+                buttons_AI[bg.y1][bg.x1].setText(String.valueOf(bg.real[bg.y1][bg.x1]));
+                if(bg.real[bg.y1][bg.x1]=='X')
+                  buttons_AI[bg.y1][bg.x1].setBackground(Color.red);
+                else
+                  buttons_AI[bg.y1][bg.x1].setBackground(Color.yellow);
+                //set fire button, ai buttons disable
+                fireButton.setEnabled(false);
+                enableAI(false);
+                /**ai fire turn begins
+                 * update player table
+                 * ai fire turn ends
+                */
+                AIFire();
+                //set fire button, ai buttons enable
+                enableAI(true);
+                fireButton.setEnabled(true);
+                //save
+              }
             }
           }
         }
@@ -513,5 +534,13 @@ public class JFrame_Battleship extends javax.swing.JFrame {
         buttons_AI[i][j].setEnabled(bool);
       }
     }
+  }
+  private void AIFire(){
+    bg.aiFirebg();
+    buttons_Player[bg.aiProp.y][bg.aiProp.x].setText(String.valueOf(bg.player[bg.aiProp.y][bg.aiProp.x]));
+    if(bg.player[bg.aiProp.y][bg.aiProp.x]=='X')
+      buttons_Player[bg.aiProp.y][bg.aiProp.x].setBackground(Color.red);
+    else
+      buttons_Player[bg.aiProp.y][bg.aiProp.x].setBackground(Color.yellow);
   }
 }

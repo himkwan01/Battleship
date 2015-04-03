@@ -39,3 +39,8 @@ player place ship method created, some validation such as string length, a-j 0-9
 fire button for place and fire works good
 player fire turn half way done (buttons parts and valdiation of character needed to add)
 ai fire logic is missing 
+
+04-03-15
+ai fire logic added
+bug: some miss shows hit (random, and cross check)
+check game over method is missing
