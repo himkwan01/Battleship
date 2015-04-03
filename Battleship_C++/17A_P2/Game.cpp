@@ -273,46 +273,46 @@ void Game::tableCheck(int q){
       }
     }
   }
-        if(x1==x2){           //y is same
-          if(abs(y1-y2)!=unit[q]-1){   //check unit
-            valid=false;
-            temp="ERROR: not match unit\n";
-            throw temp;
-          }
-          else{                 //valid
-            if(y1>y2){
-              max=y1;
-              min=y2;
-            }
-            else{
-              max=y2;
-              min=y1;
-            }
+  if(x1==x2){           //y is same
+    if(abs(y1-y2)!=unit[q]-1){   //check unit
+      valid=false;
+      temp="ERROR: not match unit\n";
+      throw temp;
+    }
+    else{                 //valid
+      if(y1>y2){
+        max=y1;
+        min=y2;
+      }
+      else{
+        max=y2;
+        min=y1;
+      }
 //            cout<<"max="<<max<<endl;
 //            cout<<"min="<<min<<endl;
 //            cout<<"p"<<y1<<endl;
-            for(int k=min;k<=max;k++){
-              if(*(*(t->real+k)+x1)==' '){
-                count++;
-              }
-            }
-            if(count!=unit[q]){
-              valid=false;
-              temp="ERROR: overlap\n";
-              throw temp;
-            }
-            if(valid==true){
-              for(int k=min;k<=max;k++){
-                *(*(t->real+k)+x1)=unit[q]+48;
-              }
-            }
-          }
+      for(int k=min;k<=max;k++){
+        if(*(*(t->real+k)+x1)==' '){
+          count++;
         }
-        if(x1!=x2 && y1!=y2){
-          valid=false;
-          temp="ERROR: not horizontal or vertical\n";
-          throw temp;
+      }
+      if(count!=unit[q]){
+        valid=false;
+        temp="ERROR: overlap\n";
+        throw temp;
+      }
+      if(valid==true){
+        for(int k=min;k<=max;k++){
+          *(*(t->real+k)+x1)=unit[q]+48;
         }
+      }
+    }
+  }
+  if(x1!=x2 && y1!=y2){
+    valid=false;
+    temp="ERROR: not horizontal or vertical\n";
+    throw temp;
+  }
 }
 void Game::start(Game &o){
   fstream io;
