@@ -5,6 +5,13 @@
  */
 package battleship_gui;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Random;
 
 /**
@@ -135,6 +142,7 @@ public class Background {
     for(int i=0;i<num;i++){
       for(int j=0;j<num;j++){
         real[i][j]=' ';
+        fake[i][j]=' ';
       }
     }
     int count, pos;
@@ -193,13 +201,15 @@ public class Background {
     }
     //hit
     else if(real[y1][x1]>='2' && real[y1][x1]<='5'){
-      System.out.println("hit, valid");
+      System.out.println("PLAYER hit, valid");
       real[y1][x1]='X';
+      fake[y1][x1]='X';
     }
     //miss
     else{
-      System.out.println("miss, valid");
+      System.out.println("PLAYER miss, valid");
       real[y1][x1]='O';
+      fake[y1][x1]='O';
     }
     return valid;
   }
@@ -210,19 +220,30 @@ public class Background {
     //overlap
     if(real[y1][x1]=='O' || real[y1][x1]=='X'){
       valid=false;
-      System.out.println("overlap-false");
+      System.out.println("PLAYER overlap-false");
     }
     //hit
     else if(real[y1][x1]>='2' && real[y1][x1]<='5'){
-      System.out.println("hit, valid");
+      System.out.println("PLAYER hit, valid");
       real[y1][x1]='X';
+      fake[y1][x1]='X';
     }
     //miss
     else{
-      System.out.println("miss, valid");
+      System.out.println("PLAYER miss, valid");
       real[y1][x1]='O';
+      fake[y1][x1]='O';
     }
     return valid;
+  }
+  public boolean chkWin(char[][] table){
+    for(int i=0;i<10;i++){
+      for(int j=0;j<10;j++){
+        if(table[i][j]>='2' && table[i][j]<='5')
+          return false;
+      }
+    }
+    return true;
   }
   public void aiFirebg(){
     Random rand = new Random();
@@ -513,4 +534,5 @@ public class Background {
       }
     }while(aiProp.done==false);
   }
+  
 }

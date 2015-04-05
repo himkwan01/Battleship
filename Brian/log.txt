@@ -50,3 +50,10 @@ bug fixed
 game over method is missing
 next step: add validation, game over method
 gameplay screenshot added
+
+04-05-15
+ai, player, name mehods created
+continue button added to menu
+read write method created
+validation missing
+win lose method created

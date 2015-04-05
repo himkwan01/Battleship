@@ -10,28 +10,42 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 /**
  *
- * @author Jasmine
+ * @author Brian
  */
 public class JFrame_Battleship extends javax.swing.JFrame {
     private static final int a = 10; //size of board a x a
     private JButton[][] buttons_Player;
     private JButton[][] buttons_AI;
+    private JLabel[] row_1;
+    private JLabel[] row_2;
     private Background bg = new Background();
+    int count=0;
+    boolean ppre=true;
     /**
      * Creates new form IntroMenu
      */
     public JFrame_Battleship() {
         initComponents();
         Playerprepare();
+        colSet();
     }
 
     /**
@@ -48,6 +62,7 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     rulesButton = new javax.swing.JButton();
     battleshipLogo = new javax.swing.JLabel();
     playerNameText = new javax.swing.JTextField();
+    Continue = new javax.swing.JButton();
     jRulesPane = new javax.swing.JLayeredPane();
     rulesTitle = new javax.swing.JLabel();
     closeButton = new javax.swing.JButton();
@@ -60,10 +75,11 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     jBoardPane_Player = new javax.swing.JLayeredPane();
     jBoardPane_AI = new javax.swing.JLayeredPane();
     AI_Label = new javax.swing.JLabel();
-    row = new javax.swing.JLabel();
+    col_2 = new javax.swing.JLabel();
     Tip = new javax.swing.JLabel();
-    row1 = new javax.swing.JLabel();
-    jLabel1 = new javax.swing.JLabel();
+    col_1 = new javax.swing.JLabel();
+    jPanel1 = new javax.swing.JPanel();
+    WinLose = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,6 +90,8 @@ public class JFrame_Battleship extends javax.swing.JFrame {
 
     startButton.setFont(new java.awt.Font("Perpetua Titling MT", 1, 24)); // NOI18N
     startButton.setText("Start");
+    startButton.setMaximumSize(new java.awt.Dimension(140, 60));
+    startButton.setMinimumSize(new java.awt.Dimension(140, 60));
     startButton.setPreferredSize(new java.awt.Dimension(140, 60));
     startButton.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -97,6 +115,27 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     playerNameText.setFont(new java.awt.Font("Perpetua Titling MT", 0, 24)); // NOI18N
     playerNameText.setText("Enter Player's Name");
     playerNameText.setToolTipText("");
+    playerNameText.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        playerNameTextMouseClicked(evt);
+      }
+    });
+
+    Continue.setFont(new java.awt.Font("Perpetua Titling MT", 1, 24)); // NOI18N
+    Continue.setText("Continue");
+    Continue.setMaximumSize(new java.awt.Dimension(140, 60));
+    Continue.setMinimumSize(new java.awt.Dimension(140, 60));
+    Continue.setPreferredSize(new java.awt.Dimension(140, 60));
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("Player.txt"), "utf-8"))) {
+      Continue.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+          ContinueMouseClicked(evt);
+        }
+      }
+    }catch(IOException e){
+      Continue.setEnabled(false);
+      e.printStackTrace();
+    }
 
     javax.swing.GroupLayout jIntroMenuPaneLayout = new javax.swing.GroupLayout(jIntroMenuPane);
     jIntroMenuPane.setLayout(jIntroMenuPaneLayout);
@@ -105,17 +144,19 @@ public class JFrame_Battleship extends javax.swing.JFrame {
       .addGroup(jIntroMenuPaneLayout.createSequentialGroup()
         .addGroup(jIntroMenuPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jIntroMenuPaneLayout.createSequentialGroup()
-            .addGap(238, 238, 238)
+            .addGap(272, 272, 272)
             .addComponent(battleshipLogo))
           .addGroup(jIntroMenuPaneLayout.createSequentialGroup()
-            .addGap(409, 409, 409)
-            .addGroup(jIntroMenuPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(rulesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGap(377, 377, 377)
+            .addComponent(playerNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(jIntroMenuPaneLayout.createSequentialGroup()
-            .addGap(330, 330, 330)
-            .addComponent(playerNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addContainerGap(362, Short.MAX_VALUE))
+            .addGap(420, 420, 420)
+            .addGroup(jIntroMenuPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+              .addComponent(rulesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+              .addGroup(jIntroMenuPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(Continue, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addComponent(startButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+        .addContainerGap(328, Short.MAX_VALUE))
     );
     jIntroMenuPaneLayout.setVerticalGroup(
       jIntroMenuPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,16 +165,19 @@ public class JFrame_Battleship extends javax.swing.JFrame {
         .addComponent(battleshipLogo)
         .addGap(76, 76, 76)
         .addComponent(playerNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(34, 34, 34)
+        .addGap(55, 55, 55)
         .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(86, 86, 86)
+        .addGap(40, 40, 40)
+        .addComponent(Continue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(40, 40, 40)
         .addComponent(rulesButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(155, Short.MAX_VALUE))
+        .addContainerGap(80, Short.MAX_VALUE))
     );
     jIntroMenuPane.setLayer(startButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
     jIntroMenuPane.setLayer(rulesButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
     jIntroMenuPane.setLayer(battleshipLogo, javax.swing.JLayeredPane.DEFAULT_LAYER);
     jIntroMenuPane.setLayer(playerNameText, javax.swing.JLayeredPane.DEFAULT_LAYER);
+    jIntroMenuPane.setLayer(Continue, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
     jRulesPane.setVisible(false);
     jRulesPane.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 255), 1, true));
@@ -209,9 +253,15 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     });
     jGamePlayPane.add(rulesLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 10, 50, -1));
 
-    jTextField1.setText("User input (coordinates)");
+    jTextField1.setText("Input Format A1A5");
     jTextField1.setToolTipText("");
-    jGamePlayPane.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 638, -1, -1));
+    jTextField1.setMinimumSize(new java.awt.Dimension(98, 20));
+    jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jTextField1MouseClicked(evt);
+      }
+    });
+    jGamePlayPane.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 638, 140, -1));
 
     fireButton.setText("Place");
     fireButton.addActionListener(new java.awt.event.ActionListener() {
@@ -223,7 +273,7 @@ public class JFrame_Battleship extends javax.swing.JFrame {
 
     playerNameLabel.setFont(new java.awt.Font("Poor Richard", 0, 48)); // NOI18N
     playerNameLabel.setText("Player's Name");
-    jGamePlayPane.add(playerNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 350, 40));
+    jGamePlayPane.add(playerNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 350, 40));
 
     jBoardPane_Player.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
     jBoardPane_Player.setPreferredSize(new java.awt.Dimension(500, 500));
@@ -232,11 +282,11 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     jBoardPane_Player.setLayout(jBoardPane_PlayerLayout);
     jBoardPane_PlayerLayout.setHorizontalGroup(
       jBoardPane_PlayerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 0, Short.MAX_VALUE)
+      .addGap(0, 496, Short.MAX_VALUE)
     );
     jBoardPane_PlayerLayout.setVerticalGroup(
       jBoardPane_PlayerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 0, Short.MAX_VALUE)
+      .addGap(0, 496, Short.MAX_VALUE)
     );
 
     ButtonTablePlayer();
@@ -250,33 +300,46 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     jBoardPane_AI.setLayout(jBoardPane_AILayout);
     jBoardPane_AILayout.setHorizontalGroup(
       jBoardPane_AILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 0, Short.MAX_VALUE)
+      .addGap(0, 496, Short.MAX_VALUE)
     );
     jBoardPane_AILayout.setVerticalGroup(
       jBoardPane_AILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 0, Short.MAX_VALUE)
+      .addGap(0, 496, Short.MAX_VALUE)
     );
 
     ButtonTableAI();
     AIprepare();
 
-    jGamePlayPane.add(jBoardPane_AI, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, -1, -1));
+    jGamePlayPane.add(jBoardPane_AI, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 100, -1, -1));
 
     AI_Label.setFont(new java.awt.Font("Poor Richard", 0, 48)); // NOI18N
     AI_Label.setText("AI");
-    jGamePlayPane.add(AI_Label, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 10, -1, -1));
+    jGamePlayPane.add(AI_Label, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, -1, -1));
 
-    row.setText("         0              1              2              3              4              5              6             7              8              9");
-    jGamePlayPane.add(row, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, 500, 30));
+    col_2.setText("         0              1              2              3              4              5              6             7              8              9");
+    jGamePlayPane.add(col_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 70, 500, 30));
 
-    Tip.setText("Please enter the coordinates to place "+bg.unit[count]+" ship\nformat is A1-A5");
+    Tip.setText("Please enter the coordinates to place "+bg.unit[count]+" ship\nformat is B-A5");
     jGamePlayPane.add(Tip, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 610, -1, -1));
 
-    row1.setText("         0              1              2              3              4              5              6             7              8              9");
-    jGamePlayPane.add(row1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 500, 30));
+    col_1.setText("         0              1              2              3              4              5              6             7              8              9");
+    jGamePlayPane.add(col_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 500, 30));
 
-    jLabel1.setText("A");
-    jGamePlayPane.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
+    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+    jPanel1.setLayout(jPanel1Layout);
+    jPanel1Layout.setHorizontalGroup(
+      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 320, Short.MAX_VALUE)
+    );
+    jPanel1Layout.setVerticalGroup(
+      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 122, Short.MAX_VALUE)
+    );
+
+    jGamePlayPane.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 150, -1, -1));
+    jGamePlayPane.add(WinLose, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, 240, 100));
+    WinLose.setBackground(Color.green);
+    WinLose.setVisible(false);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -323,10 +386,13 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     }//GEN-LAST:event_rulesLabelMouseClicked
 
     private void startButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startButtonMouseClicked
-
+      if(playerNameText.getText().equals("Enter Player's Name"))
+        playerNameLabel.setText("Player");
+      else
+        playerNameLabel.setText(playerNameText.getText());
       jIntroMenuPane.setVisible(false);
-      playerNameLabel.setText(playerNameText.getText());
       jGamePlayPane.setVisible(true);
+      reset();
     }//GEN-LAST:event_startButtonMouseClicked
 
   private void fireButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fireButtonActionPerformed
@@ -338,10 +404,13 @@ public class JFrame_Battleship extends javax.swing.JFrame {
       valid=bg.place(temp, count);
       if(valid){   //if true = valid input update gui table
         count++;
-        if(count<5)
+        if(count<5){
           Playerprepare();  //update prompt label
-        //placing ship ends
+        }//placing ship ends
         else{
+          PlayerSave();
+          AISave();
+          NameSave();
           //update label text
           Tip.setText("Ready to fire!");
           //update button text
@@ -365,26 +434,75 @@ public class JFrame_Battleship extends javax.swing.JFrame {
           buttons_AI[bg.y1][bg.x1].setBackground(Color.red);
         else
           buttons_AI[bg.y1][bg.x1].setBackground(Color.yellow);
-        //set fire button, ai buttons disable
+        //disable fire button
         fireButton.setEnabled(false);
-        enableAI(false);
-        /**ai fire turn begins
-         * update player table
-         * ai fire turn ends
-        */
-        AIFire();
-        //set fire button, ai buttons enable
-        enableAI(true);
-        fireButton.setEnabled(true);
-        //save
+        if(bg.chkWin(bg.real)){
+          //update Label
+          WinLose.setText(playerNameLabel.getText()+" wins");
+          WinLose.setVisible(true);
+          System.out.println("Player wins");
+          reset();
+        }
+        //player wins = false
+        //game continue
+        else{
+          //save
+          AISave();
+          PlayerSave();
+          //ai buttons disable
+          enableAI(false);
+          /**ai fire turn begins
+           * update player table
+           * ai fire turn ends
+          */
+          AIFire();
+          //ai wins
+          if(bg.chkWin(bg.player)){
+            //update label
+            WinLose.setText(playerNameLabel.getText()+" loses");
+            WinLose.setVisible(true);
+            System.out.println("Player loses");
+            reset();
+          }
+          else{
+            //set fire button, ai buttons enable
+            enableAI(true);
+            fireButton.setEnabled(true);
+            //save
+            
+          }
+        }//ai wins = false (game continue
       }
     }
   }//GEN-LAST:event_fireButtonActionPerformed
 
+  private void playerNameTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerNameTextMouseClicked
+    // TODO add your handling code here:
+    playerNameText.selectAll();
+  }//GEN-LAST:event_playerNameTextMouseClicked
+
+  private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
+    // TODO add your handling code here:
+    jTextField1.selectAll();
+  }//GEN-LAST:event_jTextField1MouseClicked
+  private void ContinueMouseClicked(java.awt.event.MouseEvent evt) {                                      
+    // TODO add your handling code here:
+    AILoad();
+    PlayerLoad();
+    NameLoad();
+    jIntroMenuPane.setVisible(false);
+    jGamePlayPane.setVisible(true);
+    //skip place ship part
+    Tip.setText("Ready to fire!");
+    //update button text
+    fireButton.setText("Fire");
+    //set ai buttons enable
+    enableAI(true);
+    ppre=false;
+  } 
   
     //creates the button table for the player
     public void ButtonTablePlayer() {
-      ActionListener clk = new ButtonListenerPlayer();
       //adds grid to place 2D array
       jBoardPane_Player.setLayout(new GridLayout(a,a));
       //declare size of button 2D array
@@ -395,7 +513,6 @@ public class JFrame_Battleship extends javax.swing.JFrame {
           buttons_Player[i][j] = new JButton();
 //          buttons_Player[i][j].setText(Integer.toString(i)+" "+Integer.toString(j));
           buttons_Player[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-          buttons_Player[i][j].addActionListener(clk);
           buttons_Player[i][j].setBackground(Color.white);
           buttons_Player[i][j].setEnabled(false);
           //addes buttons to the layered pane
@@ -425,21 +542,8 @@ public class JFrame_Battleship extends javax.swing.JFrame {
       }
     }
     
-    //create an action listener class for player
-    public class ButtonListenerPlayer implements ActionListener {
-      @Override
-      public void actionPerformed(ActionEvent e){
-        for (int i = 0; i < a; i++){
-          for (int j = 0; j < a; j++){
-            if(e.getSource()==buttons_Player[i][j]){ //gameButtons[i][j] was clicked
-             //Your code here
-              System.out.println("Player"+i+" "+j);
-            }
-          }
-        }
-      }
-    }
-    
+
+    //PLAYER FIRE 
     //create an action listener class for AI
     public class ButtonListenerAI implements ActionListener {  
       @Override
@@ -451,6 +555,7 @@ public class JFrame_Battleship extends javax.swing.JFrame {
               System.out.println("AI"+i+" "+j);
               if(bg.pFireCheck(i, j)){
                 //update table (only that index) AND COLOR
+                
                 buttons_AI[bg.y1][bg.x1].setText(String.valueOf(bg.real[bg.y1][bg.x1]));
                 if(bg.real[bg.y1][bg.x1]=='X')
                   buttons_AI[bg.y1][bg.x1].setBackground(Color.red);
@@ -459,15 +564,36 @@ public class JFrame_Battleship extends javax.swing.JFrame {
                 //set fire button, ai buttons disable
                 fireButton.setEnabled(false);
                 enableAI(false);
-                /**ai fire turn begins
-                 * update player table
-                 * ai fire turn ends
-                */
-                AIFire();
-                //set fire button, ai buttons enable
-                enableAI(true);
-                fireButton.setEnabled(true);
-                //save
+                if(bg.chkWin(bg.real)){
+                  //update Label
+                  WinLose.setText(playerNameLabel.getText()+" wins");
+                  WinLose.setVisible(true);
+                  System.out.println("Player wins");
+                  reset();
+                }
+                else{
+                  //save
+                  
+                  /**ai fire turn begins
+                  * update player table
+                  * ai fire turn ends
+                  */
+                  AIFire();
+                  if(bg.chkWin(bg.player)){//ai wins
+                    //update Label
+                    WinLose.setText(playerNameLabel.getText()+" loses");
+                    WinLose.setVisible(true);
+                    System.out.println("Player loses");
+                    reset();
+                  }
+                  else{
+                    //set fire button, ai buttons enable
+                    enableAI(true);
+                    fireButton.setEnabled(true);
+                    //save
+                    
+                  }
+                }
               }
             }
           }
@@ -477,21 +603,23 @@ public class JFrame_Battleship extends javax.swing.JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JLabel AI_Label;
+  private javax.swing.JButton Continue;
   private javax.swing.JLabel Tip;
+  private javax.swing.JLabel WinLose;
   private javax.swing.JLabel battleshipLogo;
   private javax.swing.JButton closeButton;
+  private javax.swing.JLabel col_1;
+  private javax.swing.JLabel col_2;
   private javax.swing.JButton fireButton;
   private javax.swing.JLayeredPane jBoardPane_AI;
   private javax.swing.JLayeredPane jBoardPane_Player;
   private javax.swing.JLayeredPane jGamePlayPane;
   private javax.swing.JLayeredPane jIntroMenuPane;
-  private javax.swing.JLabel jLabel1;
+  private javax.swing.JPanel jPanel1;
   private javax.swing.JLayeredPane jRulesPane;
   private javax.swing.JTextField jTextField1;
   private javax.swing.JLabel playerNameLabel;
   private javax.swing.JTextField playerNameText;
-  private javax.swing.JLabel row;
-  private javax.swing.JLabel row1;
   private javax.swing.JButton rulesButton;
   private javax.swing.JLabel rulesLabel;
   private javax.swing.JTextArea rulesText;
@@ -506,8 +634,8 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     bg.ai();
       for(int i=0;i<10;i++){
         for(int j=0;j<10;j++){
-          if(bg.real[i][j]!=' '){
-            buttons_AI[i][j].setText(String.valueOf(bg.real[i][j]));
+          if(bg.fake[i][j]!=' '){
+            buttons_AI[i][j].setText(String.valueOf(bg.fake[i][j]));
             buttons_AI[i][j].setBackground(Color.gray);
           }
         }
@@ -526,8 +654,7 @@ public class JFrame_Battleship extends javax.swing.JFrame {
       }
     }
   }
-  int count=0;
-  boolean ppre=true;
+  
   private void enableAI(boolean bool){
     for(int i=0;i<a;i++){
       for(int j=0;j<a;j++){
@@ -545,6 +672,134 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     else{
       buttons_Player[bg.aiProp.y][bg.aiProp.x].setBackground(Color.yellow);
       System.out.println("miss"+bg.aiProp.y+" "+bg.aiProp.x);
+    }
+    PlayerSave();
+    AISave();
+  }
+  private void colSet(){
+    row_1 = new JLabel[10];
+    row_2 = new JLabel[10];
+    for(int i=0;i<10;i++){
+      row_1[i] = new JLabel(String.valueOf((char)(i+65)));
+      row_2[i] = new JLabel(String.valueOf((char)(i+65)));
+      jGamePlayPane.add(row_1[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(20, (120+i*50), -1, -1));
+      jGamePlayPane.add(row_2[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(555, (120+i*50), -1, -1));
+    }
+  }
+  //save ai table
+  private void AISave(){
+    try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("AI.txt"), "UTF-8"))){
+      for(int i=0;i<10;i++){
+        for(int j=0;j<10;j++){
+          writer.write(String.valueOf(bg.real[i][j]));
+        }
+        writer.write("\n");
+      }
+      writer.close();
+    }catch (IOException ex){
+      //handle me
+      ex.printStackTrace();
+    }
+  }
+  //load ai
+  private void AILoad(){
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("AI.txt"), "utf-8"))) {
+      String temp;
+      int counter=0;
+      while((temp=reader.readLine())!=null){
+        for(int j=0;j<10;j++){
+         bg. real[counter][j]=temp.charAt(j);
+         if(bg.real[counter][j]=='X'){
+            buttons_AI[counter][j].setBackground(Color.red);
+            buttons_AI[counter][j].setText(String.valueOf(bg.real[counter][j]));
+          }
+          else if(bg.real[counter][j]=='O'){
+            buttons_AI[counter][j].setBackground(Color.yellow);
+            buttons_AI[counter][j].setText(String.valueOf(bg.real[counter][j]));
+          }
+        }
+        counter++;
+        System.out.println(temp);
+        System.out.println(temp.length());
+      }
+      reader.close();
+    } catch (IOException ex){
+      ex.printStackTrace();
+    }
+  }
+  //save player
+  private void PlayerSave(){
+    try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Player.txt"), "UTF-8"))){
+      for(int i=0;i<10;i++){
+        for(int j=0;j<10;j++){
+          writer.write(String.valueOf(bg.player[i][j]));
+        }
+        writer.write("\n");
+      }
+      writer.close();
+    }catch (IOException ex){
+      //handle me
+      ex.printStackTrace();
+    }
+  }
+  //load player
+  private void PlayerLoad(){
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("Player.txt"), "utf-8"))) {
+      String temp;
+      int counter=0;
+      while((temp=reader.readLine())!=null){
+        for(int j=0;j<10;j++){
+          bg.player[counter][j]=temp.charAt(j);
+          if(bg.player[counter][j]=='X'){
+            buttons_Player[counter][j].setBackground(Color.red);
+            buttons_Player[counter][j].setText(String.valueOf(bg.player[counter][j]));
+          }
+          else if(bg.player[counter][j]=='O'){
+            buttons_Player[counter][j].setBackground(Color.yellow);
+            buttons_Player[counter][j].setText(String.valueOf(bg.player[counter][j]));
+          }
+          else if(bg.player[counter][j]!=' '){
+            buttons_Player[counter][j].setBackground(Color.gray);
+            buttons_Player[counter][j].setText(String.valueOf(bg.player[counter][j]));
+          }
+        }
+        counter++;
+        System.out.println(temp);
+        System.out.println(temp.length());
+      }
+      reader.close();
+    } catch (IOException ex){
+      ex.printStackTrace();
+    }
+  }
+  private void NameSave(){
+    try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Name.txt"), "UTF-8"))){
+      writer.write(playerNameLabel.getText());
+      writer.close();
+    }catch (IOException ex){
+      //handle me
+      ex.printStackTrace();
+    }
+  }
+  //load name to player name label
+  private void NameLoad(){
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("Name.txt"), "utf-8"))) {
+      String temp;
+      temp=reader.readLine();
+      playerNameLabel.setText(temp);
+      System.out.println(temp);
+      System.out.println(temp.length());
+    reader.close();
+    } catch (IOException ex){
+      ex.printStackTrace();
+    }
+  }
+  private void reset(){
+    File[] file = new File[3];
+    String[] FileName = {"Player.txt", "AI.txt", "Name.txt"};
+    for(int i=0;i<3;i++){
+      file[i] = new File(FileName[i]);
+      file[i].delete();
     }
   }
 }
