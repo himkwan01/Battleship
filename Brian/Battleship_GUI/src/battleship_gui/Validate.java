@@ -11,7 +11,10 @@ package battleship_gui;
  * @author Himkw_000
  */
 public class Validate {
+  public boolean place(String f){
+    return f.matches("[A-J]{1}[0-9]{1}[A-J]{1}[0-9]{1}");
+  }
   public boolean fire(String f){
-    return f.matches("[a-jA-J]{1}[0-9]{1}");
+    return f.matches("[A-J]{1}[0-9]{1}");
   }
 }

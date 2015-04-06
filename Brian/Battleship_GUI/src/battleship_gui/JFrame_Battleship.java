@@ -39,9 +39,12 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     private Background bg = new Background();
     int count=0;
     boolean ppre=true;
+    Validate validation = new Validate();
+    
     /**
      * Creates new form IntroMenu
      */
+    
     public JFrame_Battleship() {
         initComponents();
         Playerprepare();
@@ -68,6 +71,9 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     closeButton = new javax.swing.JButton();
     rulesText = new javax.swing.JTextArea();
     jGamePlayPane = new javax.swing.JLayeredPane();
+    Invalid_Intern_Frame = new javax.swing.JInternalFrame("Invalid Input");
+    jButton1 = new javax.swing.JButton();
+    Invalid_Label = new javax.swing.JLabel();
     rulesLabel = new javax.swing.JLabel();
     jTextField1 = new javax.swing.JTextField();
     fireButton = new javax.swing.JButton();
@@ -78,7 +84,6 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     col_2 = new javax.swing.JLabel();
     Tip = new javax.swing.JLabel();
     col_1 = new javax.swing.JLabel();
-    jPanel1 = new javax.swing.JPanel();
     WinLose = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -153,9 +158,8 @@ public class JFrame_Battleship extends javax.swing.JFrame {
             .addGap(420, 420, 420)
             .addGroup(jIntroMenuPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
               .addComponent(rulesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-              .addGroup(jIntroMenuPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(Continue, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-                .addComponent(startButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+              .addComponent(Continue, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+              .addComponent(startButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         .addContainerGap(328, Short.MAX_VALUE))
     );
     jIntroMenuPaneLayout.setVerticalGroup(
@@ -245,6 +249,38 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     jGamePlayPane.setPreferredSize(new java.awt.Dimension(1024, 1000));
     jGamePlayPane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+    Invalid_Intern_Frame.setVisible(true);
+
+    jButton1.setText("Close");
+    jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButton1MouseClicked(evt);
+      }
+    });
+
+    Invalid_Label.setText("Invalid Notice");
+
+    javax.swing.GroupLayout Invalid_Intern_FrameLayout = new javax.swing.GroupLayout(Invalid_Intern_Frame.getContentPane());
+    Invalid_Intern_Frame.getContentPane().setLayout(Invalid_Intern_FrameLayout);
+    Invalid_Intern_FrameLayout.setHorizontalGroup(
+      Invalid_Intern_FrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Invalid_Intern_FrameLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(jButton1))
+      .addComponent(Invalid_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+    );
+    Invalid_Intern_FrameLayout.setVerticalGroup(
+      Invalid_Intern_FrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Invalid_Intern_FrameLayout.createSequentialGroup()
+        .addComponent(Invalid_Label, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jButton1))
+    );
+
+    jGamePlayPane.add(Invalid_Intern_Frame, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 490, 210, 150));
+    Invalid_Intern_Frame.setVisible(false);
+    Invalid_Intern_Frame.setResizable(false);
+
     rulesLabel.setToolTipText("Rules");
     rulesLabel.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -324,19 +360,6 @@ public class JFrame_Battleship extends javax.swing.JFrame {
 
     col_1.setText("         0              1              2              3              4              5              6             7              8              9");
     jGamePlayPane.add(col_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 500, 30));
-
-    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-    jPanel1.setLayout(jPanel1Layout);
-    jPanel1Layout.setHorizontalGroup(
-      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 320, Short.MAX_VALUE)
-    );
-    jPanel1Layout.setVerticalGroup(
-      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 122, Short.MAX_VALUE)
-    );
-
-    jGamePlayPane.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 150, -1, -1));
     jGamePlayPane.add(WinLose, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, 240, 100));
     WinLose.setBackground(Color.green);
     WinLose.setVisible(false);
@@ -401,77 +424,102 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     System.out.println(temp);
     //place ship
     if(ppre){
-      valid=bg.place(temp, count);
-      if(valid){   //if true = valid input update gui table
-        count++;
-        if(count<5){
-          Playerprepare();  //update prompt label
-        }//placing ship ends
-        else{
-          PlayerSave();
-          AISave();
-          NameSave();
-          //update label text
-          Tip.setText("Ready to fire!");
-          //update button text
-          fireButton.setText("Fire");
-          //set ai buttons enable
-          enableAI(true);
-          ppre=false;
+      if(validation.place(temp)){
+        valid=bg.place(temp, count);
+        if(valid && validation.place(temp)){   //if true = valid input update gui table
+          count++;
+          if(count<5){
+            Playerprepare();  //update prompt label
+          }//placing ship ends
+          else{
+            PlayerSave();
+            AISave();
+            NameSave();
+            //update label text
+            Tip.setText("Ready to fire!");
+            //update button text
+            fireButton.setText("Fire");
+            //set ai buttons enable
+            enableAI(true);
+            ppre=false;
+          }
+          UpdateTable();
         }
-        UpdateTable();
+        else{
+          //add new label
+          System.out.println("Invalid input");
+          Invalid_Intern_Frame.setVisible(true);
+          Invalid_Label.setText("Invalid_Input: Overlap/Unit");
+        }
       }
-      else
+      else{
+        //add new label
         System.out.println("Invalid input");
+        Invalid_Intern_Frame.setVisible(true);
+        Invalid_Label.setText("Invalid_Input: place format A1A5");
+      }
+        
     }
     //fire
     else{
       //validation needed length=2
-      if(bg.pFireCheck(temp)){
-        //update table (only that index) AND COLOR
-        buttons_AI[bg.y1][bg.x1].setText(String.valueOf(bg.real[bg.y1][bg.x1]));
-        if(bg.real[bg.y1][bg.x1]=='X')
-          buttons_AI[bg.y1][bg.x1].setBackground(Color.red);
-        else
-          buttons_AI[bg.y1][bg.x1].setBackground(Color.yellow);
-        //disable fire button
-        fireButton.setEnabled(false);
-        if(bg.chkWin(bg.real)){
-          //update Label
-          WinLose.setText(playerNameLabel.getText()+" wins");
-          WinLose.setVisible(true);
-          System.out.println("Player wins");
-          reset();
-        }
-        //player wins = false
-        //game continue
-        else{
-          //save
-          AISave();
-          PlayerSave();
-          //ai buttons disable
-          enableAI(false);
-          /**ai fire turn begins
-           * update player table
-           * ai fire turn ends
-          */
-          AIFire();
-          //ai wins
-          if(bg.chkWin(bg.player)){
-            //update label
-            WinLose.setText(playerNameLabel.getText()+" loses");
+      if(validation.fire(temp)){
+        if(bg.pFireCheck(temp)){
+          //update table (only that index) AND COLOR
+          buttons_AI[bg.y1][bg.x1].setText(String.valueOf(bg.real[bg.y1][bg.x1]));
+          if(bg.real[bg.y1][bg.x1]=='X')
+            buttons_AI[bg.y1][bg.x1].setBackground(Color.red);
+          else
+            buttons_AI[bg.y1][bg.x1].setBackground(Color.yellow);
+          //disable fire button
+          fireButton.setEnabled(false);
+          if(bg.chkWin(bg.real)){
+            //update Label
+            WinLose.setText(playerNameLabel.getText()+" wins");
             WinLose.setVisible(true);
-            System.out.println("Player loses");
+            System.out.println("Player wins");
             reset();
           }
+          //player wins = false
+          //game continue
           else{
-            //set fire button, ai buttons enable
-            enableAI(true);
-            fireButton.setEnabled(true);
-            //save
-            
-          }
-        }//ai wins = false (game continue
+            //ai buttons disable
+            enableAI(false);
+            /**ai fire turn begins
+             * update player table
+             * ai fire turn ends
+            */
+            AIFire();
+            //ai wins
+            if(bg.chkWin(bg.player)){
+              //update label
+              WinLose.setText(playerNameLabel.getText()+" loses");
+              WinLose.setVisible(true);
+              System.out.println("Player loses");
+              reset();
+            }
+            else{
+              //set fire button, ai buttons enable
+              enableAI(true);
+              fireButton.setEnabled(true);
+              //save
+              AISave();
+              PlayerSave();
+            }
+          }//ai wins = false (game continue
+        }
+        else{
+          //add one new label
+          System.out.println("Fire Invalid");
+          Invalid_Intern_Frame.setVisible(true);
+          Invalid_Label.setText("Invalid Input: Overlap");
+        }
+      }
+      else{
+        //add one new label
+        System.out.println("Fire Invalid");
+        Invalid_Intern_Frame.setVisible(true);
+        Invalid_Label.setText("Invalid Input: Fire Format A1");
       }
     }
   }//GEN-LAST:event_fireButtonActionPerformed
@@ -485,6 +533,11 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     // TODO add your handling code here:
     jTextField1.selectAll();
   }//GEN-LAST:event_jTextField1MouseClicked
+
+  private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    // TODO add your handling code here:
+    Invalid_Intern_Frame.setVisible(false);
+  }//GEN-LAST:event_jButton1MouseClicked
   private void ContinueMouseClicked(java.awt.event.MouseEvent evt) {                                      
     // TODO add your handling code here:
     AILoad();
@@ -572,8 +625,6 @@ public class JFrame_Battleship extends javax.swing.JFrame {
                   reset();
                 }
                 else{
-                  //save
-                  
                   /**ai fire turn begins
                   * update player table
                   * ai fire turn ends
@@ -591,7 +642,8 @@ public class JFrame_Battleship extends javax.swing.JFrame {
                     enableAI(true);
                     fireButton.setEnabled(true);
                     //save
-                    
+                    PlayerSave();
+                    AISave();
                   }
                 }
               }
@@ -604,6 +656,8 @@ public class JFrame_Battleship extends javax.swing.JFrame {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JLabel AI_Label;
   private javax.swing.JButton Continue;
+  private javax.swing.JInternalFrame Invalid_Intern_Frame;
+  private javax.swing.JLabel Invalid_Label;
   private javax.swing.JLabel Tip;
   private javax.swing.JLabel WinLose;
   private javax.swing.JLabel battleshipLogo;
@@ -613,9 +667,9 @@ public class JFrame_Battleship extends javax.swing.JFrame {
   private javax.swing.JButton fireButton;
   private javax.swing.JLayeredPane jBoardPane_AI;
   private javax.swing.JLayeredPane jBoardPane_Player;
+  private javax.swing.JButton jButton1;
   private javax.swing.JLayeredPane jGamePlayPane;
   private javax.swing.JLayeredPane jIntroMenuPane;
-  private javax.swing.JPanel jPanel1;
   private javax.swing.JLayeredPane jRulesPane;
   private javax.swing.JTextField jTextField1;
   private javax.swing.JLabel playerNameLabel;

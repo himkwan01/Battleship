@@ -57,3 +57,7 @@ continue button added to menu
 read write method created
 validation missing
 win lose method created
+
+04-05-15 (2)
+validation method created
+invalid internal frame added
