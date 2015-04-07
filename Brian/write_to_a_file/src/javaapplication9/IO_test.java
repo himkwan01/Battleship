@@ -27,6 +27,8 @@ public class IO_test {
    */
   public static void main(String[] args) throws UnsupportedEncodingException {
     // TODO code application logic here
+    String str = "123";
+    System.out.println((int)str.charAt(0));
     int[][] a = new int[5][5];
     int q=0;
     for(int i=0;i<5;i++){
