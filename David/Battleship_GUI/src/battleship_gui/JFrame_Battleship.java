@@ -120,6 +120,11 @@ public class JFrame_Battleship extends javax.swing.JFrame {
         playerNameText.setFont(new java.awt.Font("Perpetua Titling MT", 0, 24)); // NOI18N
         playerNameText.setText("Enter Player's Name");
         playerNameText.setToolTipText("");
+        playerNameText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                playerNameTextFocusLost(evt);
+            }
+        });
         playerNameText.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 playerNameTextMouseClicked(evt);
@@ -141,16 +146,6 @@ public class JFrame_Battleship extends javax.swing.JFrame {
                 ContinueActionPerformed(evt);
             }
         });
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("Player.txt"), "utf-8"))) {
-            Continue.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    ContinueMouseClicked(evt);
-                }
-            }
-        }catch(IOException e){
-            Continue.setEnabled(false);
-            e.printStackTrace();
-        }
 
         javax.swing.GroupLayout jIntroMenuPaneLayout = new javax.swing.GroupLayout(jIntroMenuPane);
         jIntroMenuPane.setLayout(jIntroMenuPaneLayout);
@@ -594,6 +589,24 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     private void ContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContinueActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ContinueActionPerformed
+
+    private void playerNameTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_playerNameTextFocusLost
+        // TODO add your handling code here:
+        playerNameLabel.setText(playerNameText.getText());
+        System.out.println(playerNameLabel.getText());
+        String saveDir = playerNameLabel.getText();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("./"+saveDir+"/Player.txt"), "utf-8"))) {
+            Continue.setEnabled(true);
+            Continue.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ContinueMouseClicked(evt);
+                }
+            }
+        }catch(IOException e){
+            Continue.setEnabled(false);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_playerNameTextFocusLost
   private void ContinueMouseClicked(java.awt.event.MouseEvent evt) {                                      
     // TODO add your handling code here:
     AILoad();

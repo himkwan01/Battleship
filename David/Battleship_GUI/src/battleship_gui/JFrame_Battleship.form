@@ -160,6 +160,7 @@
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="playerNameTextFocusLost"/>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="playerNameTextMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playerNameTextActionPerformed"/>
           </Events>
@@ -183,9 +184,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ContinueActionPerformed"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(&quot;Player.txt&quot;), &quot;utf-8&quot;))) {&#xa;  Continue.addMouseListener(new java.awt.event.MouseAdapter() {&#xa;    public void mouseClicked(java.awt.event.MouseEvent evt) {&#xa;      ContinueMouseClicked(evt);&#xa;    }&#xa;  }&#xa;}catch(IOException e){&#xa;  Continue.setEnabled(false);&#xa;  e.printStackTrace();&#xa;}"/>
-          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
