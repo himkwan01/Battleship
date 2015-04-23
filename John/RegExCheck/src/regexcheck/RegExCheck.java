@@ -15,10 +15,12 @@ public class RegExCheck {
     //Email regular expression pattern.
     public static String EMAILPTRN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    //American phone number regular expression pattern.
-    //XXX-XXX-XXXX or (XXX) XXX-XXXX. No area code below 200.
-    public static String PHONEPTRN = "^(\\([2-9][0-9][0-9]\\) |[2-9][0-9]"
-            + "[0-9]-)[0-9]{3}-[0-9]{4}$";
+    //Username regular expression pattern.
+    //Must contain one lowercase. 4 - 10 chars.
+    public static String USRNMPTRN = "^(?=.*[a-z])[a-z0-9]{4,10}$";
+    //Password regular expression pattern.
+    //Must contain one uppercase, one lowercase, one numeric. 8 - 15 chars.
+    public static String PASSWDPTRN = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$";
 
     //Validate first name.
     public static boolean checkFirstName (String firstName){
@@ -35,9 +37,14 @@ public class RegExCheck {
         return emailAdd.matches (EMAILPTRN);
     }
     
-    //Validate American phone number.
-    public static boolean checkPhone (String phoneNum){
-        return phoneNum.matches (PHONEPTRN);
+    //Validate username.
+    public static boolean checkUsrnm (String userName){
+        return userName.matches (USRNMPTRN);
+    }
+    
+    //Validate password.
+    public static boolean checkPasswd (String passWrd){
+        return passWrd.matches (PASSWDPTRN);
     }
     
 }
