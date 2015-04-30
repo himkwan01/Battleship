@@ -1,7 +1,7 @@
 /*
  * Author: jdecker
  */
-package Login;
+package login;
  
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
