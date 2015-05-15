@@ -3,3 +3,6 @@ Tested out splash screen using gifs. Found there was a limit to the size of the 
 
 3/26/15
 Created two 2D button arrays (one for Player and one for AI) and placed them onto the JFrame. The code can be found within the JFrame_Battleship source.
+
+5/15/15
+Added the login jframe that john created and other features but I also deleted a few things (NOT FINISHED YET). Connected the project to the server Lehr provided. Created three tables called battleship_entity_player, battleship_entity_login, and battleship_xref_player_login. battleship_entity_player contains first name, last name, and email. battleship_entity_login contains username and password. I have not made a query with it yet because I'm not sure how. 
