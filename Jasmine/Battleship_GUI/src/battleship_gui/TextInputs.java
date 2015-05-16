@@ -1,6 +1,7 @@
 package battleship_gui;
 
 import java.awt.Color;
+import java.util.List;
 
 
 /**
@@ -10,6 +11,9 @@ import java.awt.Color;
 public class TextInputs extends javax.swing.JFrame {
     
     RegExCheck validate = new RegExCheck();
+    PlayerInfoQueries playerQueries;
+    private List<PlayerInfo> results;
+    private int numberOfEntries = 0;
     Color correct = new Color(102,255,102);
     Color wrong = new Color(255,102,102);
     JFrame_Battleship game;
@@ -19,6 +23,7 @@ public class TextInputs extends javax.swing.JFrame {
      */
     public TextInputs() {
         initComponents();
+        //playerQueries = new PlayerInfoQueries();
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
@@ -43,6 +48,7 @@ public class TextInputs extends javax.swing.JFrame {
         emailErrorLabel = new javax.swing.JLabel();
         passwordField = new javax.swing.JTextField();
         signInButton = new javax.swing.JButton();
+        usernameNotFoundErrorLabel = new javax.swing.JLabel();
         usernameField2 = new javax.swing.JTextField();
         passwordErrorLabel = new javax.swing.JLabel();
         passwordField2 = new javax.swing.JTextField();
@@ -53,8 +59,21 @@ public class TextInputs extends javax.swing.JFrame {
         signUpLabel = new javax.swing.JLabel();
         loginLabel = new javax.swing.JLabel();
         smallbackgroundImageLabel = new javax.swing.JLabel();
+        jInvalidUsername = new javax.swing.JLayeredPane();
+        invalidUsername = new javax.swing.JInternalFrame();
+        exclamationIconLabel = new javax.swing.JLabel();
+        unavailableMessageLabel = new javax.swing.JLabel();
+        doneButton2 = new javax.swing.JButton();
+        smallbackgroundImageLabel1 = new javax.swing.JLabel();
+        jValidUsername = new javax.swing.JLayeredPane();
+        validUsername = new javax.swing.JInternalFrame();
+        checkMarkIconLabel = new javax.swing.JLabel();
+        availableMessageLabel = new javax.swing.JLabel();
+        doneButton = new javax.swing.JButton();
+        smallbackgroundImageLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImages(null);
 
         jSignUpLogin.setMinimumSize(new java.awt.Dimension(640, 461));
         jSignUpLogin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -111,12 +130,28 @@ public class TextInputs extends javax.swing.JFrame {
         signInButton.setText("Sign in");
         signInButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, java.awt.Color.lightGray, java.awt.Color.white));
         signInButton.setPreferredSize(new java.awt.Dimension(70, 40));
+        signInButton.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                signInButtonMouseMoved(evt);
+            }
+        });
+        signInButton.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                signInButtonFocusLost(evt);
+            }
+        });
         signInButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 signInButtonMouseClicked(evt);
             }
         });
         jSignUpLogin.add(signInButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 290, 90, -1));
+
+        usernameNotFoundErrorLabel.setVisible(false);
+        usernameNotFoundErrorLabel.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        usernameNotFoundErrorLabel.setForeground(new java.awt.Color(255, 102, 102));
+        usernameNotFoundErrorLabel.setText("Username not found! Please sign up.");
+        jSignUpLogin.add(usernameNotFoundErrorLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, -1, -1));
 
         usernameField2.setText("Username");
         usernameField2.setPreferredSize(new java.awt.Dimension(200, 30));
@@ -125,7 +160,7 @@ public class TextInputs extends javax.swing.JFrame {
                 usernameField2FocusLost(evt);
             }
         });
-        jSignUpLogin.add(usernameField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, -1, -1));
+        jSignUpLogin.add(usernameField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, -1, -1));
 
         passwordErrorLabel.setVisible(false);
         passwordErrorLabel.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -155,17 +190,18 @@ public class TextInputs extends javax.swing.JFrame {
         usernameErrorLabel.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         usernameErrorLabel.setForeground(new java.awt.Color(255, 102, 102));
         usernameErrorLabel.setText("Must contain 1 lowercase, 4 - 10 chars");
+        usernameErrorLabel.setToolTipText("");
         jSignUpLogin.add(usernameErrorLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
 
         checkButton.setBackground(new java.awt.Color(102, 102, 102));
         checkButton.setForeground(new java.awt.Color(204, 204, 204));
         checkButton.setText("check");
-        checkButton.setToolTipText("Check username availablitiy");
+        checkButton.setToolTipText("Check availablility");
         checkButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, java.awt.Color.lightGray, java.awt.Color.white));
         checkButton.setPreferredSize(new java.awt.Dimension(80, 40));
-        checkButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkButtonActionPerformed(evt);
+        checkButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                checkButtonMouseClicked(evt);
             }
         });
         jSignUpLogin.add(checkButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 70, 30));
@@ -203,18 +239,154 @@ public class TextInputs extends javax.swing.JFrame {
         jSignUpLogin.add(loginLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, -1, -1));
 
         smallbackgroundImageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/battleship_gui/BSBackground_small.jpg"))); // NOI18N
-        smallbackgroundImageLabel.setToolTipText("Check username availablitiy");
+        smallbackgroundImageLabel.setToolTipText("");
         jSignUpLogin.add(smallbackgroundImageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jInvalidUsername.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
+        jInvalidUsername.setPreferredSize(new java.awt.Dimension(678, 511));
+        jInvalidUsername.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        invalidUsername.setTitle("Username Availability");
+        invalidUsername.setFrameIcon(null);
+        invalidUsername.setVisible(true);
+
+        exclamationIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/battleship_gui/exclamation_point_100x100.png"))); // NOI18N
+
+        unavailableMessageLabel.setFont(new java.awt.Font("Rockwell", 0, 24)); // NOI18N
+        unavailableMessageLabel.setText("Username is unavailable");
+
+        doneButton2.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
+        doneButton2.setText("done");
+        doneButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                doneButton2MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout invalidUsernameLayout = new javax.swing.GroupLayout(invalidUsername.getContentPane());
+        invalidUsername.getContentPane().setLayout(invalidUsernameLayout);
+        invalidUsernameLayout.setHorizontalGroup(
+            invalidUsernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(invalidUsernameLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(exclamationIconLabel)
+                .addGroup(invalidUsernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(invalidUsernameLayout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(unavailableMessageLabel))
+                    .addGroup(invalidUsernameLayout.createSequentialGroup()
+                        .addGap(130, 130, 130)
+                        .addComponent(doneButton2)))
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+        invalidUsernameLayout.setVerticalGroup(
+            invalidUsernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(invalidUsernameLayout.createSequentialGroup()
+                .addGroup(invalidUsernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(invalidUsernameLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(exclamationIconLabel))
+                    .addGroup(invalidUsernameLayout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(unavailableMessageLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(doneButton2)))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        jInvalidUsername.add(invalidUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 480, 200));
+
+        smallbackgroundImageLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/battleship_gui/BSBackground_small.jpg"))); // NOI18N
+        smallbackgroundImageLabel1.setToolTipText("Check username availablitiy");
+        jInvalidUsername.add(smallbackgroundImageLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jValidUsername.setPreferredSize(new java.awt.Dimension(678, 511));
+        jValidUsername.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        validUsername.setTitle("Username Availability");
+        validUsername.setFont(new java.awt.Font("Rockwell", 1, 13)); // NOI18N
+        validUsername.setFrameIcon(null);
+        validUsername.setVisible(true);
+
+        checkMarkIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/battleship_gui/check_mark_100x100.png"))); // NOI18N
+
+        availableMessageLabel.setFont(new java.awt.Font("Rockwell", 0, 24)); // NOI18N
+        availableMessageLabel.setText("Username is available");
+
+        doneButton.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
+        doneButton.setText("done");
+        doneButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                doneButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout validUsernameLayout = new javax.swing.GroupLayout(validUsername.getContentPane());
+        validUsername.getContentPane().setLayout(validUsernameLayout);
+        validUsernameLayout.setHorizontalGroup(
+            validUsernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(validUsernameLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(checkMarkIconLabel)
+                .addGroup(validUsernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(validUsernameLayout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(availableMessageLabel))
+                    .addGroup(validUsernameLayout.createSequentialGroup()
+                        .addGap(130, 130, 130)
+                        .addComponent(doneButton)))
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
+        validUsernameLayout.setVerticalGroup(
+            validUsernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(validUsernameLayout.createSequentialGroup()
+                .addGroup(validUsernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(validUsernameLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(checkMarkIconLabel))
+                    .addGroup(validUsernameLayout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(availableMessageLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(doneButton)))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        jValidUsername.add(validUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 480, 200));
+
+        smallbackgroundImageLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/battleship_gui/BSBackground_small.jpg"))); // NOI18N
+        smallbackgroundImageLabel2.setToolTipText("Check username availablitiy");
+        jValidUsername.add(smallbackgroundImageLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSignUpLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jValidUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jInvalidUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSignUpLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jValidUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jInvalidUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
@@ -299,12 +471,14 @@ public class TextInputs extends javax.swing.JFrame {
         passwordField2.setBackground(wrong);
     }//GEN-LAST:event_passwordField2FocusLost
 
-    private void checkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkButtonActionPerformed
-
     private void signInButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signInButtonMouseClicked
         // TODO add your handling code here:
+        
+       
+        game.startAILoad();
+        game.startPlayerLoad();
+        game.startNameLoad();
+        game.startUpdateTable();
         
         game.setVisible(true);
         
@@ -334,6 +508,11 @@ public class TextInputs extends javax.swing.JFrame {
     private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
         // TODO add your handling code here:
         if(registerButton.isEnabled()){
+            
+            //playerQueries.addPlayer(firstNameField.getText(), 
+            //        lastNameField.getText(), emailField.getText(),
+             //       usernameField.getText(), passwordField.getText());
+            
             //makes a new game
             game.reset();
             game.setVisible(true);
@@ -343,21 +522,91 @@ public class TextInputs extends javax.swing.JFrame {
             dispose();
         }
     }//GEN-LAST:event_registerButtonMouseClicked
+
+    private void checkButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkButtonMouseClicked
+        // TODO add your handling code here:
+        /*
+        if(checkUsername(usernameField.getText())){
+            jSignUpLogin.setVisible(false);
+            jValidUsername.setVisible(true);
+        } else {
+            jSignUpLogin.setVisible(false);
+            jInvalidUsername.setVisible(true);
+        }
+        */
+    }//GEN-LAST:event_checkButtonMouseClicked
+
+    private void signInButtonFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_signInButtonFocusLost
+        // TODO add your handling code here:
+        /*
+        if(checkUsername(usernameField.getText())){
+            usernameNotFoundErrorLabel.setVisible(true);
+        } else {
+            usernameNotFoundErrorLabel.setVisible(false);
+        }
+        */
+    }//GEN-LAST:event_signInButtonFocusLost
+
+    private void signInButtonMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signInButtonMouseMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signInButtonMouseMoved
+
+    private void doneButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doneButtonMouseClicked
+        // TODO add your handling code here:
+        
+        jInvalidUsername.setVisible(false);
+        jValidUsername.setVisible(false);
+        jSignUpLogin.setVisible(true);
+       
+        
+    }//GEN-LAST:event_doneButtonMouseClicked
+
+    private void doneButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doneButton2MouseClicked
+        // TODO add your handling code here:
+        
+        jInvalidUsername.setVisible(false);
+        jValidUsername.setVisible(false);
+        jSignUpLogin.setVisible(true);
+        
+        
+    }//GEN-LAST:event_doneButton2MouseClicked
     
     public void setBattleshipFrame(JFrame_Battleship bs){
         game = bs;
     }
     
-
+    /*
+    //If true: username is unique, if false: username is already taken
+    private boolean checkUsername(String username){
+        results = 
+         playerQueries.getPlayerByUsername(username);
+        numberOfEntries = results.size();
+        
+        if (numberOfEntries != 0){
+            return true;
+        } else{
+            return false;
+        }
+        
+    }
+    */
     
    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel availableMessageLabel;
     private javax.swing.JButton checkButton;
+    private javax.swing.JLabel checkMarkIconLabel;
+    private javax.swing.JButton doneButton;
+    private javax.swing.JButton doneButton2;
     private javax.swing.JLabel emailErrorLabel;
     private javax.swing.JTextField emailField;
+    private javax.swing.JLabel exclamationIconLabel;
     private javax.swing.JTextField firstNameField;
+    private javax.swing.JInternalFrame invalidUsername;
+    private javax.swing.JLayeredPane jInvalidUsername;
     private javax.swing.JPanel jSignUpLogin;
+    private javax.swing.JLayeredPane jValidUsername;
     private javax.swing.JTextField lastNameField;
     private javax.swing.JLabel loginLabel;
     private javax.swing.JLabel passwordErrorLabel;
@@ -367,8 +616,13 @@ public class TextInputs extends javax.swing.JFrame {
     private javax.swing.JButton signInButton;
     private javax.swing.JLabel signUpLabel;
     private javax.swing.JLabel smallbackgroundImageLabel;
+    private javax.swing.JLabel smallbackgroundImageLabel1;
+    private javax.swing.JLabel smallbackgroundImageLabel2;
+    private javax.swing.JLabel unavailableMessageLabel;
     private javax.swing.JLabel usernameErrorLabel;
     private javax.swing.JTextField usernameField;
     private javax.swing.JTextField usernameField2;
+    private javax.swing.JLabel usernameNotFoundErrorLabel;
+    private javax.swing.JInternalFrame validUsername;
     // End of variables declaration//GEN-END:variables
 }

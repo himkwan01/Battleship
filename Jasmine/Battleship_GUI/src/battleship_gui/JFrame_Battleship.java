@@ -42,6 +42,9 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     boolean ppre=true;
     Validate validation = new Validate();
     TextInputs menu;
+    Color greyish = new Color(204,204,204);
+    Font font0 = new Font("Rockwell", Font.PLAIN, 20);
+
     
     /**
      * Creates new form IntroMenu
@@ -51,7 +54,9 @@ public class JFrame_Battleship extends javax.swing.JFrame {
         initComponents();
         Playerprepare();
         colSet();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null);  
+        Tip.setForeground(greyish);
+        Tip.setFont(font0);
     }
 
     /**
@@ -232,7 +237,7 @@ public class JFrame_Battleship extends javax.swing.JFrame {
         });
         jGamePlayPane.add(fireButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 680, 50, 30));
 
-        playerNameLabel.setFont(new java.awt.Font("Poor Richard", 0, 48)); // NOI18N
+        playerNameLabel.setFont(new java.awt.Font("Rockwell Condensed", 1, 48)); // NOI18N
         playerNameLabel.setForeground(new java.awt.Color(204, 204, 204));
         playerNameLabel.setText("Player's Name");
         jGamePlayPane.add(playerNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 350, 40));
@@ -274,7 +279,7 @@ public class JFrame_Battleship extends javax.swing.JFrame {
 
         jGamePlayPane.add(jBoardPane_AI, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 100, -1, -1));
 
-        AI_Label.setFont(new java.awt.Font("Poor Richard", 0, 48)); // NOI18N
+        AI_Label.setFont(new java.awt.Font("Rockwell Condensed", 1, 48)); // NOI18N
         AI_Label.setForeground(new java.awt.Color(204, 204, 204));
         AI_Label.setText("AI");
         jGamePlayPane.add(AI_Label, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, -1, -1));
@@ -611,13 +616,7 @@ public class JFrame_Battleship extends javax.swing.JFrame {
       }
   }
   private void Playerprepare(){
-      
-    Color greyish = new Color(204,204,204);
-    Font font0 = new Font("Rockwell", Font.PLAIN, 20);
-    
-    Tip.setForeground(greyish);
-    
-    Tip.setFont(font0);
+     
     Tip.setText("Enter the coordinates to place "+bg.unit[count]+"-unit ship");
   }
   private void UpdateTable(){
@@ -679,6 +678,7 @@ public class JFrame_Battleship extends javax.swing.JFrame {
   }
   //load ai
   private void AILoad(){
+     
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("AI.txt"), "utf-8"))) {
       String temp;
       int counter=0;
@@ -702,6 +702,10 @@ public class JFrame_Battleship extends javax.swing.JFrame {
     } catch (IOException ex){
       ex.printStackTrace();
     }
+    
+    //set ai buttons enable
+    enableAI(true);
+    ppre=false;
   }
   //save player
   private void PlayerSave(){
@@ -720,6 +724,13 @@ public class JFrame_Battleship extends javax.swing.JFrame {
   }
   //load player
   private void PlayerLoad(){
+      
+    //skip place ship part
+    Tip.setText("Ready to fire!");
+    
+    //update button text
+    fireButton.setText("Fire");
+    
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("Player.txt"), "utf-8"))) {
       String temp;
       int counter=0;
@@ -778,4 +789,19 @@ public class JFrame_Battleship extends javax.swing.JFrame {
       file[i].delete();
     }
   }
+  
+  
+  public void startAILoad(){
+      
+  }
+   public void startPlayerLoad(){
+      
+  }
+  public void startNameLoad(){
+      
+  }
+   public void startUpdateTable(){
+      
+  }
+  
 }

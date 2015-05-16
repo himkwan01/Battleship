@@ -20,9 +20,10 @@ public class PlayerInfoQueries {
    private static final String PASSWORD = "42029csc18b";
 
    private Connection connection; // manages connection
-   private PreparedStatement selectAllPeople; 
-   private PreparedStatement selectPeopleByLastName; 
-   private PreparedStatement insertNewPerson; 
+   private PreparedStatement selectAllPlayers; 
+   private PreparedStatement selectPlayerByUsername; 
+   private PreparedStatement insertNewPlayerInfo;
+   private PreparedStatement insertNewPlayerLogin;
     
    // constructor
    public PlayerInfoQueries()
@@ -33,18 +34,25 @@ public class PlayerInfoQueries {
             DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
          // create query that selects all entries in the AddressBook
-         selectAllPeople = 
-            connection.prepareStatement("SELECT * FROM Addresses");
+         selectAllPlayers = 
+            connection.prepareStatement("SELECT * FROM battleship_entity_player");
          
          // create query that selects entries with a specific last name
-         selectPeopleByLastName = connection.prepareStatement(
-            "SELECT * FROM Addresses WHERE LastName = ?");
+         selectPlayerByUsername = connection.prepareStatement(
+            "SELECT * FROM battleship_entity_login WHERE username = ?");
          
          // create insert that adds a new entry into the database
-         insertNewPerson = connection.prepareStatement(
-            "INSERT INTO Addresses " + 
-            "(FirstName, LastName, Email, Username, Password) " + 
-            "VALUES (?, ?, ?, ?, ?)");
+         insertNewPlayerInfo = connection.prepareStatement(
+            "INSERT INTO battleship_entity_player " + 
+            "(first_name, last_name, email) " + 
+            "VALUES (?, ?, ?)");
+         
+         // create insert that adds a new entry into the database
+         insertNewPlayerLogin = connection.prepareStatement(
+            "INSERT INTO battleship_entity_login " + 
+            "(username, password) " + 
+            "VALUES (?, ?)");
+         
       }
       catch (SQLException sqlException)
       {
@@ -62,7 +70,7 @@ public class PlayerInfoQueries {
       try 
       {
          // executeQuery returns ResultSet containing matching entries
-         resultSet = selectAllPeople.executeQuery(); 
+         resultSet = selectAllPlayers.executeQuery(); 
          results = new ArrayList<PlayerInfo>();
          
          while (resultSet.next())
@@ -97,17 +105,17 @@ public class PlayerInfoQueries {
    } 
 
    // select person by last name   
-   public List<PlayerInfo> getPeopleByLastName(String name)
+   public List<PlayerInfo> getPlayerByUsername(String username)
    {
       List<PlayerInfo> results = null;
       ResultSet resultSet = null;
 
       try 
       {
-         selectPeopleByLastName.setString(1, name); // specify last name
+         selectPlayerByUsername.setString(1, username); // specify last name
 
          // executeQuery returns ResultSet containing matching entries
-         resultSet = selectPeopleByLastName.executeQuery(); 
+         resultSet = selectPlayerByUsername.executeQuery(); 
 
          results = new ArrayList<PlayerInfo>();
 
@@ -150,14 +158,18 @@ public class PlayerInfoQueries {
       // set parameters, then execute insertNewPerson
       try 
       {
-         insertNewPerson.setString(1, fname);
-         insertNewPerson.setString(2, lname);
-         insertNewPerson.setString(3, email);
-         insertNewPerson.setString(4, username);
-         insertNewPerson.setString(5, password);
+         insertNewPlayerInfo.setString(1, fname);
+         insertNewPlayerInfo.setString(2, lname);
+         insertNewPlayerInfo.setString(3, email);
+         insertNewPlayerLogin.setString(1, username);
+         insertNewPlayerLogin.setString(2, password);
+         
 
          // insert the new entry; returns # of rows updated
-         result = insertNewPerson.executeUpdate(); 
+         result = insertNewPlayerInfo.executeUpdate(); 
+         
+         // insert the new entry; returns # of rows updated
+         result += insertNewPlayerLogin.executeUpdate(); 
       }
       catch (SQLException sqlException)
       {
