@@ -64,3 +64,6 @@ invalid internal frame added
 
 04-23-15
 LogIn sample added
+
+05-06-15
+battleship validate class - add 3 method (user name, password, email)
