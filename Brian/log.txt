@@ -67,3 +67,9 @@ LogIn sample added
 
 05-06-15
 battleship validate class - add 3 method (user name, password, email)
+
+05-20-15
+copied jasime's version
+fix register and login "Tab" problem
+check and register buttons work fine
+login button isn't working, can check the username column, but cannot check the same row passord
