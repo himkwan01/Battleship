@@ -73,3 +73,7 @@ copied jasime's version
 fix register and login "Tab" problem
 check and register buttons work fine
 login button isn't working, can check the username column, but cannot check the same row passord
+
+newest version v3
+login allow either email or username
+TODO:need to update xref after registration
