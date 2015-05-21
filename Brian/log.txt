@@ -77,3 +77,8 @@ login button isn't working, can check the username column, but cannot check the 
 newest version v3
 login allow either email or username
 TODO:need to update xref after registration
+
+05-21-15
+newest version v4
+update xref done
+need to add thread?
