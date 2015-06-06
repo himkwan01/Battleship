@@ -106,7 +106,7 @@ public class TextInputs extends javax.swing.JFrame {
           .addGroup(invalidUsernameLayout.createSequentialGroup()
             .addGap(130, 130, 130)
             .addComponent(doneButton2)))
-        .addContainerGap(65, Short.MAX_VALUE))
+        .addContainerGap(29, Short.MAX_VALUE))
     );
     invalidUsernameLayout.setVerticalGroup(
       invalidUsernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,6 +180,9 @@ public class TextInputs extends javax.swing.JFrame {
     passwordField.setText("Password");
     passwordField.setPreferredSize(new java.awt.Dimension(200, 30));
     passwordField.addFocusListener(new java.awt.event.FocusAdapter() {
+      public void focusGained(java.awt.event.FocusEvent evt) {
+        passwordFieldFocusGained(evt);
+      }
       public void focusLost(java.awt.event.FocusEvent evt) {
         passwordFieldFocusLost(evt);
       }
@@ -193,6 +196,9 @@ public class TextInputs extends javax.swing.JFrame {
     emailField.setText("Email address");
     emailField.setPreferredSize(new java.awt.Dimension(200, 30));
     emailField.addFocusListener(new java.awt.event.FocusAdapter() {
+      public void focusGained(java.awt.event.FocusEvent evt) {
+        emailFieldFocusGained(evt);
+      }
       public void focusLost(java.awt.event.FocusEvent evt) {
         emailFieldFocusLost(evt);
       }
@@ -201,6 +207,9 @@ public class TextInputs extends javax.swing.JFrame {
     usernameField.setText("Username");
     usernameField.setPreferredSize(new java.awt.Dimension(200, 30));
     usernameField.addFocusListener(new java.awt.event.FocusAdapter() {
+      public void focusGained(java.awt.event.FocusEvent evt) {
+        usernameFieldFocusGained(evt);
+      }
       public void focusLost(java.awt.event.FocusEvent evt) {
         usernameFieldFocusLost(evt);
       }
@@ -321,8 +330,8 @@ public class TextInputs extends javax.swing.JFrame {
     usernameField2.setText("Username");
     usernameField2.setPreferredSize(new java.awt.Dimension(200, 30));
     usernameField2.addFocusListener(new java.awt.event.FocusAdapter() {
-      public void focusLost(java.awt.event.FocusEvent evt) {
-        usernameField2FocusLost(evt);
+      public void focusGained(java.awt.event.FocusEvent evt) {
+        usernameField2FocusGained(evt);
       }
     });
     jSignUpLogin.add(usernameField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, -1, -1));
@@ -330,8 +339,8 @@ public class TextInputs extends javax.swing.JFrame {
     passwordField2.setText("Password");
     passwordField2.setPreferredSize(new java.awt.Dimension(200, 30));
     passwordField2.addFocusListener(new java.awt.event.FocusAdapter() {
-      public void focusLost(java.awt.event.FocusEvent evt) {
-        passwordField2FocusLost(evt);
+      public void focusGained(java.awt.event.FocusEvent evt) {
+        passwordField2FocusGained(evt);
       }
     });
     jSignUpLogin.add(passwordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 230, -1, -1));
@@ -382,9 +391,9 @@ public class TextInputs extends javax.swing.JFrame {
       .addComponent(jSignUpLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
       .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-          .addGap(0, 0, Short.MAX_VALUE)
+          .addGap(0, 15, Short.MAX_VALUE)
           .addComponent(jInvalidUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addGap(0, 0, Short.MAX_VALUE)))
+          .addGap(0, 16, Short.MAX_VALUE)))
     );
 
     pack();
@@ -448,26 +457,6 @@ public class TextInputs extends javax.swing.JFrame {
             usernameField.setBackground(wrong);
         }
     }//GEN-LAST:event_usernameFieldFocusLost
-
-    private void usernameField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameField2FocusLost
-        // TODO add your handling code here:
-        if(usernameField2.getText().length()!=0){
-            usernameField2.setBackground(correct);
-            
-        }
-        else {
-            usernameField2.setBackground(wrong);
-        }
-    }//GEN-LAST:event_usernameField2FocusLost
-
-    private void passwordField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordField2FocusLost
-        // TODO add your handling code here:
-        if(passwordField2.getText().length()!=0){
-            passwordField2.setBackground(correct);
-        }
-        else
-        passwordField2.setBackground(wrong);
-    }//GEN-LAST:event_passwordField2FocusLost
 
     private void signInButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signInButtonMouseClicked
         // TODO add your handling code here:
@@ -546,6 +535,31 @@ public class TextInputs extends javax.swing.JFrame {
     invalidUsername.setVisible(false);
     //jSignUpLogin.setVisible(true);
   }//GEN-LAST:event_doneButton2MouseClicked
+
+  private void emailFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFieldFocusGained
+    // TODO add your handling code here:
+    emailField.selectAll();
+  }//GEN-LAST:event_emailFieldFocusGained
+
+  private void usernameFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameFieldFocusGained
+    // TODO add your handling code here:
+    usernameField.selectAll();
+  }//GEN-LAST:event_usernameFieldFocusGained
+
+  private void passwordFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFieldFocusGained
+    // TODO add your handling code here:
+    passwordField.selectAll();
+  }//GEN-LAST:event_passwordFieldFocusGained
+
+  private void usernameField2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameField2FocusGained
+    // TODO add your handling code here:
+    usernameField2.selectAll();
+  }//GEN-LAST:event_usernameField2FocusGained
+
+  private void passwordField2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordField2FocusGained
+    // TODO add your handling code here:
+    passwordField2.selectAll();
+  }//GEN-LAST:event_passwordField2FocusGained
 
     public void setBattleshipFrame(JFrame_Battleship bs){
         game = bs;
