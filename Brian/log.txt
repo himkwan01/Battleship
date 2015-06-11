@@ -88,6 +88,6 @@ newest version v4
 thread splash screen
 update enum table
 login   ->no record ->place
-	->hv record ->continue
+	->hv record ->continue	
 register need test
 put textinput class back to jframe battleship class
